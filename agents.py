@@ -36,3 +36,28 @@ class agent:
         )
 
         return response.choices[0].message.content.strip()
+    
+
+    def detect_sql_type(self, sql_query: str) -> str:
+        prompt = f"""
+        You are an expert SQL analyst. Classify the following SQL query into one of these categories:
+
+        - DDL (Data Definition Language) – e.g., CREATE, ALTER, DROP
+        - DML (Data Manipulation Language) – e.g., SELECT, INSERT, UPDATE, DELETE
+        - DCL (Data Control Language) – e.g., GRANT, REVOKE
+        - TCL (Transaction Control Language) – e.g., COMMIT, ROLLBACK
+
+        SQL Query:
+        {sql_query}
+
+        Respond with only one of the following: DDL, DML, DCL, or TCL.
+        """
+
+        response = self.client.chat.completions.create(
+            model="llama3-8b-8192",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0
+        )
+
+        return response.choices[0].message.content.strip()
+

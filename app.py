@@ -16,8 +16,10 @@ with col1:
     st.markdown("### Source Language")
     source_sql = st.text_area("Source SQL", height=400, key="source_sql")
     dialect = "MySQL"
+    op_type = "DDL"
     if source_sql:
         dialect = agent_object.detect_sql_dialect(source_sql)
+        op_type = agent_object.detect_sql_type(source_sql)
 
     col11, col12 = st.columns(2)
     with col11:
@@ -28,8 +30,11 @@ with col1:
                                 index=detected_dialect,
                                 key="source_lang")
     with col12:
+        op_type_list = ["DML", "DDL", "DCL", "TCL"]
+        detected_op_type = op_type_list.index(op_type)
         sql_type = st.selectbox("SQL Type", 
-                                ["DML (SELECT, INSERT, etc.)", "DDL (CREATE, ALTER, etc.)", "DCL (GRANT, REVOKE)", "TCL (COMMIT, ROLLBACK)"], 
+                                op_type_list,
+                                index = detected_op_type,
                                 key="sql_type")
 
 with col2:
