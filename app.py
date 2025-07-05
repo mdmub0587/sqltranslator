@@ -15,7 +15,7 @@ col1, col2 = st.columns(2)
 with col1:
     st.markdown("### Source Language")
     source_sql = st.text_area("Source SQL", height=400, key="source_sql")
-    dialect = "MySQL"
+    dialect = "IBM DB2"
     op_type = "DDL"
     if source_sql:
         dialect = agent_object.detect_sql_dialect(source_sql)
@@ -23,7 +23,7 @@ with col1:
 
     col11, col12 = st.columns(2)
     with col11:
-        dialect_list = ["MySQL", "PostgreSQL", "SQL Server", "Oracle", "BigQuery"]
+        dialect_list = ["MySQL", "PostgreSQL", "SQL Server", "Oracle", "BigQuery", "IBM DB2"]
         detected_dialect = dialect_list.index(dialect)
         source_lang = st.selectbox("Choose Source SQL Dialect", 
                                 dialect_list, 
